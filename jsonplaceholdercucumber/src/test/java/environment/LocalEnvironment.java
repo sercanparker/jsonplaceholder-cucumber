@@ -1,0 +1,42 @@
+package environment;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * @author sercansensulun on 6.10.2021.
+ */
+public class LocalEnvironment implements Environment {
+
+    private static final String PROPERTIES_FILE_NAME = "properties/environment.properties";
+
+    private Properties properties;
+
+    public LocalEnvironment() throws IOException {
+        this.properties = new Properties();
+        BufferedReader reader = new BufferedReader(new FileReader(PROPERTIES_FILE_NAME));
+        properties.load(reader);
+    }
+
+    @Override
+    public String getBaseURI() {
+        return properties.getProperty("base.uri");
+    }
+
+    @Override
+    public String getUsersResources() {
+        return properties.getProperty("users.resources");
+    }
+
+    @Override
+    public String getCommentResources() {
+        return properties.getProperty("comments.resources");
+    }
+
+    @Override
+    public String getPostsResources() {
+        return properties.getProperty("posts.resources");
+    }
+}

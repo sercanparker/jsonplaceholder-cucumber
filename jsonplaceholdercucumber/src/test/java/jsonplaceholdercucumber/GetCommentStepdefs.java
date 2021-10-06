@@ -5,13 +5,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.io.IOException;
+
 /**
  * @author sercansensulun on 6.10.2021.
  */
 public class GetCommentStepdefs extends StepDefinitions{
 
 
-    public GetCommentStepdefs(StepData stepData) {
+    public GetCommentStepdefs(StepData stepData) throws IOException {
         super(stepData);
     }
 
