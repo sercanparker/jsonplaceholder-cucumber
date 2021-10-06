@@ -7,10 +7,4 @@ public interface Environment {
 
     String getBaseURI();
 
-    String getUsersResources();
-
-    String getCommentResources();
-
-    String getPostsResources();
-
 }

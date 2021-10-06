@@ -25,18 +25,4 @@ public class LocalEnvironment implements Environment {
         return properties.getProperty("base.uri");
     }
 
-    @Override
-    public String getUsersResources() {
-        return properties.getProperty("users.resources");
-    }
-
-    @Override
-    public String getCommentResources() {
-        return properties.getProperty("comments.resources");
-    }
-
-    @Override
-    public String getPostsResources() {
-        return properties.getProperty("posts.resources");
-    }
 }
