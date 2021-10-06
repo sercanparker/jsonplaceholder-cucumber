@@ -1,11 +1,11 @@
 package jsonplaceholdercucumber;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-import static org.junit.Assert.*;
-
 public class StepDefinitions {
+
+    protected StepData stepData;
+
+    public StepDefinitions(StepData stepData){
+        this.stepData = stepData;
+    }
 
 }
