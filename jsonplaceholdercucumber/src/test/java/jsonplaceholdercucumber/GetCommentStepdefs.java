@@ -109,7 +109,7 @@ public class GetCommentStepdefs extends StepDefinitions {
     public void bodyValuesAreNotEmptyInTheComments() {
         stepData.testComments.forEach(
                 comment -> {
-                    Assert.assertTrue(String.format("%s name should not be empty.", comment.getBody()), StringUtils.isNotEmpty(comment.getBody()));
+                    Assert.assertTrue(String.format("%s body should not be empty.", comment.getBody()), StringUtils.isNotEmpty(comment.getBody()));
                 }
         );
     }

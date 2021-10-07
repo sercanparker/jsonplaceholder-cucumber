@@ -1,6 +1,6 @@
 Feature: Comments which are entered by the Users can be retrieved by API.
 
-  Scenario: There are posts written by user who has <username> username. Comments returns always same by path and query param.
+  Scenario: There are posts written by user who has "Delphine" username. Comments returns always same by path and query param.
     Given there is an user has "Delphine" username
     And there are posts written by test user
     When all comments are retrieved for each post by path param
