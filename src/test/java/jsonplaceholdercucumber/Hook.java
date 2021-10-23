@@ -1,29 +1,27 @@
 package jsonplaceholdercucumber;
 
-import environment.Environment;
-import environment.LocalEnvironment;
+import environment.DynamicApiEnvironmentManager;
+import environment.ApiEnvironment;
 import io.cucumber.java.Before;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-
-import java.io.IOException;
 
 /**
  * @author sercansensulun on 6.10.2021.
  */
 public class Hook {
 
-    private Environment environment;
+    private ApiEnvironment dynamicEnvironmentManager;
 
-    public Hook() throws IOException {
-        this.environment = new LocalEnvironment();
+    public Hook(DynamicApiEnvironmentManager dynamicApiEnvironmentManager) {
+        this.dynamicEnvironmentManager = dynamicApiEnvironmentManager;
     }
 
     @Before
     public void beforeEachScenario() {
         //setup scenario here.
-        RestAssured.baseURI = environment.getBaseURI();
+        RestAssured.baseURI = dynamicEnvironmentManager.getBaseURI();
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
     }
 }

@@ -5,6 +5,7 @@ import POJOs.Post;
 import POJOs.User;
 import enumeration.ApiParam;
 import enumeration.ApiResource;
+import environment.DynamicApiEnvironmentManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,8 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class GetCommentStepdefs extends StepDefinitions {
 
-    public GetCommentStepdefs(StepData stepData) {
-        super(stepData);
+    public GetCommentStepdefs(StepData stepData, DynamicApiEnvironmentManager dynamicApiEnvironmentManager) {
+        super(stepData, dynamicApiEnvironmentManager);
     }
 
     @Then("e-mail formats are correct in the comments")

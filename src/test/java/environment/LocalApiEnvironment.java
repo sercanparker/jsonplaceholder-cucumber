@@ -8,13 +8,13 @@ import java.util.Properties;
 /**
  * @author sercansensulun on 6.10.2021.
  */
-public class LocalEnvironment implements Environment {
+public class LocalApiEnvironment implements ApiEnvironment {
 
     private static final String PROPERTIES_FILE_NAME = "properties/environment.properties";
 
     private Properties properties;
 
-    public LocalEnvironment() throws IOException {
+    public LocalApiEnvironment() throws IOException {
         this.properties = new Properties();
         BufferedReader reader = new BufferedReader(new FileReader(PROPERTIES_FILE_NAME));
         properties.load(reader);
