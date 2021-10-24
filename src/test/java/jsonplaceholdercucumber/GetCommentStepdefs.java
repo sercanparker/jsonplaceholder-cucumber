@@ -59,6 +59,7 @@ public class GetCommentStepdefs extends StepDefinitions {
         Assert.assertEquals(1, testUsers.size());
         Assert.assertEquals(String.format("Given %s username should be exist to execute test.", username), username, testUser.getUsername());
         stepData.testUser = testUser;
+        stepData.testUsersMap.put(username, testUser);
     }
 
     @And("there are posts written by test user")
@@ -166,6 +167,30 @@ public class GetCommentStepdefs extends StepDefinitions {
 
     @Then("comments are the same retrieved by path and query param.")
     public void commentsAreTheSameRetrievedByPathAndQueryParam() {
-        assertThat(stepData.testCommentsByPathParam).usingRecursiveFieldByFieldElementComparator().usingElementComparatorIgnoringFields().isEqualTo(stepData.testCommentsByQueryParam);
+        assertThat(stepData.testCommentsByPathParam)
+                .usingRecursiveFieldByFieldElementComparator()
+                .usingElementComparatorIgnoringFields()
+                .isEqualTo(stepData.testCommentsByQueryParam);
+    }
+
+    @And("there are posts written by {string} username")
+    public void thereArePostsWrittenByUsername(String username) {
+        Map<String, User> testUserHashMap = stepData.testUsersMap;
+        User testUser = testUserHashMap.get(username);
+        Assert.assertNotNull(String.format("Given %s username should be exist to execute test.", username),testUser);
+
+        List<Post> posts = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .param(ApiParam.USERID.getName(), testUser.getId())
+                .get(ApiResource.POSTS.getName())
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(new TypeRef<List<Post>>() {
+                });
+
+        Assert.assertTrue(posts.size() > 0);
+        stepData.testPosts = posts;
     }
 }
