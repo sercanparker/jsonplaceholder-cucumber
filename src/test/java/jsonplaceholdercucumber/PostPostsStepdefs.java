@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import wrapper.ServiceWrapper;
 
 import static io.restassured.RestAssured.given;
 
@@ -15,8 +16,9 @@ import static io.restassured.RestAssured.given;
  * @author sercansensulun on 24.10.2021.
  */
 public class PostPostsStepdefs extends StepDefinitions {
-    public PostPostsStepdefs(StepData stepData) {
-        super(stepData);
+
+    public PostPostsStepdefs(StepData stepData, ServiceWrapper serviceWrapper) {
+        super(stepData, serviceWrapper);
         stepData.postBuilder = Post.builder();
     }
 

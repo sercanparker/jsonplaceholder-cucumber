@@ -14,6 +14,7 @@ import io.restassured.http.ContentType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.junit.Assert;
+import wrapper.ServiceWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class GetCommentStepdefs extends StepDefinitions {
 
-    public GetCommentStepdefs(StepData stepData) {
-        super(stepData);
+
+    public GetCommentStepdefs(StepData stepData, ServiceWrapper serviceWrapper) {
+        super(stepData, serviceWrapper);
     }
 
     @Then("e-mail formats are correct in the comments")
@@ -44,19 +46,8 @@ public class GetCommentStepdefs extends StepDefinitions {
 
     @Given("there is an user has {string} username")
     public void thereIsAnUserHasUsername(String username) {
-        List<User> testUsers = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .param(ApiParam.USERNAME.getName(), username)
-                .get(ApiResource.USERS.getName())
-                .then()
-                .statusCode(200)
-                .extract()
-                .as(new TypeRef<List<User>>() {
-                });
-        User testUser = testUsers.get(0);
-
-        Assert.assertEquals(1, testUsers.size());
+        User testUser = serviceWrapper.getUserByUsername(username);
+        Assert.assertNotNull(testUser);
         Assert.assertEquals(String.format("Given %s username should be exist to execute test.", username), username, testUser.getUsername());
         stepData.testUser = testUser;
         stepData.testUsersMap.put(username, testUser);
@@ -65,17 +56,8 @@ public class GetCommentStepdefs extends StepDefinitions {
     @And("there are posts written by test user")
     public void thereArePostsWrittenByTestUser() {
         User testUser = stepData.testUser;
-        List<Post> posts = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .param(ApiParam.USERID.getName(), testUser.getId())
-                .get(ApiResource.POSTS.getName())
-                .then()
-                .statusCode(200)
-                .extract()
-                .as(new TypeRef<List<Post>>() {
-                });
-
+        Assert.assertNotNull(testUser);
+        List<Post> posts = serviceWrapper.getPostsCreatedByUser(testUser);
         Assert.assertTrue(posts.size() > 0);
         stepData.testPosts = posts;
     }
@@ -179,17 +161,7 @@ public class GetCommentStepdefs extends StepDefinitions {
         User testUser = testUserHashMap.get(username);
         Assert.assertNotNull(String.format("Given %s username should be exist to execute test.", username),testUser);
 
-        List<Post> posts = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .param(ApiParam.USERID.getName(), testUser.getId())
-                .get(ApiResource.POSTS.getName())
-                .then()
-                .statusCode(200)
-                .extract()
-                .as(new TypeRef<List<Post>>() {
-                });
-
+        List<Post> posts = serviceWrapper.getPostsCreatedByUser(testUser);
         Assert.assertTrue(posts.size() > 0);
         stepData.testPosts = posts;
     }
